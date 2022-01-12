@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  app-nest:
+    container_name: app-nest
+    build:
+      context: .
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    volumes:
+      - ./:/work:rw
+    ports:
+      - '3000:3000'
+    networks:
+      - dockernet
+
+networks:
+  dockernet:
+    external: true
+
+volumes:
+  data:
+    driver: local

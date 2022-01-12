@@ -1,11 +1,13 @@
-FROM node:12.4.0-alpine
-
+FROM node:12.22-alpine3.15
 WORKDIR /work/
-
 COPY package.json /work/package.json
+COPY tsconfig.build.json /work/tsconfig.build.json
+COPY tsconfig.json /work/tsconfig.json
 
-RUN npm install yarn
+RUN apk update && apk upgrade && \
+  apk add --no-cache bash && \
+  yarn global add @nestjs/cli
 
 COPY ./src/ /work/
-
+COPY init.sh init.sh
 CMD ["./init.sh"]
